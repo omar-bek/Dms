@@ -91,7 +91,7 @@
 
 
         @if ($action->action == 'شارك المستند')
-            @foreach ($docs->departments as $item)
+            @foreach ($docs->departments->skip(1) as $item)
                 <div class="d-flex justify-content-center align-items-center mb-4">
 
                     <div style="border: 1px solid #000; padding: 10px; margin-left: 15px;">
