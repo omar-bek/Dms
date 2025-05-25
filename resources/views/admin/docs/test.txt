@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ $document->name }}</title>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    {{-- <style>
+        /* .printableArea {
+            position: relative;
+            min-height: 100vh;
+            padding-bottom: 150px;
+        }
+        .signature-container {
+        display: flex;  
+        justify-content: space-between;  
+        align-items: center; 
+        margin-top: 30px;  
+    }
+
+    .signature-item {
+        text-align: center;  
+        width: 48%; 
+    }
+
+    .signature-item img {
+        display: block;
+        margin: 10px auto 0 auto;  
+        width: 100px; 
+        height: 100px;  
+        object-fit: contain;  
+    }
+
+    .signature-item h4,
+    .signature-item p {
+        margin: 5px 0;  
+    } */
+
+        
+    </style> --}}
+    <style>
+        .signature-container {
+            display: flex;
+            /* ترتيب أفقي */
+            /* flex-wrap: nowrap; منع العناصر من الالتفاف */
+            justify-content: space-between;
+            /* توزيع العناصر بالتساوي */
+            align-items: center;
+            /* محاذاة عمودية */
+            /* width: 100%; التأكد من أن الحاوية تأخذ عرض الصفحة */
+            /* gap: 10px; مسافة بين العناصر */
+            direction: rtl;
+            /* تغيير الاتجاه إذا كنت تريد الاتجاه من اليمين لليسار */
+        }
+
+        .signature-item {
+            text-align: center;
+            /* محاذاة محتوى كل عنصر للوسط */
+            /* flex: 1; جعل العناصر تأخذ نفس العرض */
+        }
+
+        .signature-item img {
+            max-width: 100px;
+            height: auto;
+            display: block;
+            margin: 5px auto;
+        }
+    </style>
+</head>
+
+<body dir="rtl">
+    {{-- @if ($signature->notes == null) style="text-align: right;"  @else style="text-align: le;"  @endif --}}
+
+
+    <div class="container"  >
+        <div class="printableArea" width="100%" >
+            {!! clean_html($document->content) !!}
+            @php
+                $signatureCount = $document->signature->count();
+            @endphp
+            @if ($document->signature->isNotEmpty())
+
+                <div class="signature-container" dir="rtl"  >
+                    <div class="signature-item" style="float: right">
+                        @if (isset($signature_one) && $signature_one->notes != null)
+                            <p>{{ $signature_one->notes }}</p>
+                        @else
+                            <h4>{{ App\Models\User::where('id', $signature_one->user_id)->first()->name }}</h4>
+                        @endif
+                        <img width="100px"  height="100px" src="{{ asset($signature_one->image) }}" alt="Signature">
+                    </div>
+                    @if(isset($signature_two))
+                    <div class="signature-item" style="float: left">
+                        @if (isset($signature_two) && $signature_two->notes != null)
+                            <p>{{ $signature_two->notes }}</p>
+                        @else
+                            <h4>{{ App\Models\User::where('id', $signature_two->user_id)->first()->name }}</h4>
+                        @endif
+                        <img  width="100px"  height="100px" src="{{ $signature_two->image }}" alt="Signature">
+                    </div>
+                    @endif
+                </div>
+
+
+
+
+            @endif
+        </div>
+    </div>
+
+
+
+</body>
+
+</html>
