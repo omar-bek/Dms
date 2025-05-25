@@ -25,4 +25,5 @@ return [
     'sent_to_department' => 'Sent document to :department department',
     'date' => 'Date',
     'time' => 'Time',
+    'indepartment' => 'in department'
 ];

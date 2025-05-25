@@ -73,6 +73,9 @@
 
         <div style="background: linear-gradient(#aaa, #888); padding: 10px 30px; color: white; font-weight: bold;">
             {{ __('documents.created_by_user', ['name' => $docs->owners->name]) }}
+            <hr>
+            {{ __('documents.indepartment') . $docs->departments->first()->name }}
+
         </div>
     </div>
 

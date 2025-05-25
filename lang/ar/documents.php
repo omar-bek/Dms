@@ -26,4 +26,5 @@ return [
     'sent_to_department' => ' إلى قسم :department',
     'date' => 'التاريخ',
     'time' => 'الوقت',
+    'indepartment' => 'تم انشاءه في قسم '
 ];
