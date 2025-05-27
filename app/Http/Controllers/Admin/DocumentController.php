@@ -47,20 +47,19 @@ class DocumentController extends Controller
             $column = "created_at";
         }
 
-        if ($user->role_id != 2) {
-            $query->whereHas('owners', function ($query) {
-                $query->where('owner', Auth::id());
-            })
-                ->orWhereHas('departments', function ($query) use ($departments) {
+        if ($user->role_id == 1) {
+            $query->where(function ($query) use ($user, $departments) {
+                $query->whereHas('owners', function ($query) use ($user) {
+                    $query->where('owner', $user->id);
+                })->orWhereHas('departments', function ($query) use ($departments) {
                     $query->whereIn('departments.id', $departments->pluck('id'));
-                })->orderBy($column, 'desc')->paginate();
+                });
+            });
         }
+        $documents = $query->orderBy($column, 'desc')->paginate();
 
-        if ($user->role_id == 2) {
-            $documents = $query->orderBy($column, 'desc')->paginate();
-        } else {
-            $documents = $query->orderBy($column, 'desc')->paginate();
-        }
+
+
 
         $departments = Department::get();
 
